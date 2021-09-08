@@ -213,6 +213,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@prisma/engines@2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db":
+  version "2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db.tgz#b6cf70bc05dd2a62168a16f3ea58a1b011074621"
+  integrity sha512-Q9CwN6e5E5Abso7J3A1fHbcF4NXGRINyMnf7WQ07fXaebxTTARY5BNUzy2Mo5uH82eRVO5v7ImNuR044KTjLJg==
+
 "@rushstack/eslint-patch@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
@@ -2732,6 +2737,13 @@ pretty-hrtime@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
+
+prisma@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-3.0.1.tgz#7f52b6533b562d0bb32e1b74403b146ee6d89029"
+  integrity sha512-ENmYAopd56nkds5/IOSTGixbkbUN2QdEzB4cp/mtaGB/G0OArbP6cnbA/9u02Pe29RdErbNOoIdCGASjpItJwQ==
+  dependencies:
+    "@prisma/engines" "2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
