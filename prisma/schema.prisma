@@ -9,3 +9,27 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Event {
+  id          String        @id
+  name        String
+  startDate   DateTime      @default(now())
+  endDate     DateTime      @default(now())
+  classes     Class[]
+}
+
+model Student {
+  id          String        @id
+  name        String
+  email       String?
+  phoneNum    String?
+}
+
+model Class {
+  id          String        @id
+  name        String
+  classType   String
+  schedule    DateTime      @default(now())
+  event       Event         @relation(fields: [eventId], references: [id])
+  eventId     String
+}
