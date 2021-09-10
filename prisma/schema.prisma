@@ -13,6 +13,7 @@ generator client {
 model Event {
   id          String        @id
   name        String
+  type        String
   startDate   DateTime      @default(now())
   endDate     DateTime      @default(now())
   classes     Class[]

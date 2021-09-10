@@ -1,0 +1,9 @@
+@use '../mixin/form';
+
+.form {
+    @include form.form;
+}
+
+.error {
+    @include form.error;
+}

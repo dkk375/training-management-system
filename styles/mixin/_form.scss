@@ -1,0 +1,20 @@
+@mixin form {
+    h1 {
+        @apply font-extrabold text-2xl lg:text-4xl mb-8;
+    }
+    input, select {
+        @apply block w-full;
+        &[type="submit"] {
+            @apply w-1/4 p-4 mt-8;
+        }
+    }
+    label {
+        > span:first-child {
+            @apply block mt-4;
+        }
+    } 
+}
+
+@mixin error {
+    @apply text-red-700;
+}

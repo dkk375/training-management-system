@@ -1,10 +1,11 @@
-import React from 'react'
+import MainLayout from '@layouts/main'
 import type { GetServerSideProps, NextPage } from 'next'
 import prisma from '@lib/prisma'
 import { ConvertToLocalDate } from '@lib/date'
-import Table from '@components/table'
+import Card from '@components/home/card'
+import styles from '@styles/modules/home.module.scss'
 
-export const getServerSideProps:GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
     const data = await prisma.event.findMany()
     return {
         props: { 
@@ -12,6 +13,7 @@ export const getServerSideProps:GetServerSideProps = async () => {
             return {
             id: item.id,
             name: item.name,
+            eventType: item.type,
             startDate: ConvertToLocalDate(item.startDate),
             endDate: ConvertToLocalDate(item.endDate)
             }
@@ -21,29 +23,15 @@ export const getServerSideProps:GetServerSideProps = async () => {
 }
 
 const Home: NextPage = (props) => {
-    const columns = [
-        {
-            Header: 'ID',
-            accessor: 'id'
-        },
-        {
-            Header: 'Agenda',
-            accessor: 'name'
-        },
-        {
-            Header: 'Tanggal Mulai',
-            accessor: 'startDate'
-        },
-        {
-            Header: 'Tanggal Selesai',
-            accessor: 'endDate'
-        }
-    ]
-
     return (
-        <>
-            <Table columns={columns} data={props['data']}/>
-        </>
+        <MainLayout>
+        <section className={styles.card_container}>
+            {props['data'].map(data => (
+                <Card title={data.name} subtitle={data.eventType} dateStart={data.startDate} url={`/event/${data.id}`} key={data.id} />
+            ))}
+            <Card title={'Tambah Dauroh'} url={'/event/create'} />
+        </section>
+        </MainLayout>
     )
 }
 

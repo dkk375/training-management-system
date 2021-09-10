@@ -1,0 +1,9 @@
+.table {
+    @apply table-auto w-full border-collapse;
+    &, th, td {
+        @apply border border-green-600;
+    }
+    th, td {
+        @apply p-2;
+    }
+}

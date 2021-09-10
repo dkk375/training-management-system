@@ -1,7 +1,8 @@
 import React from 'react'
 import { useTable } from 'react-table'
+import styles from '@styles/modules/table.module.scss'
 
-export default function Table({columns, data}) {
+const CreateTable = ({columns, data}) => {
     const {
         getTableProps,
         getTableBodyProps,
@@ -10,7 +11,7 @@ export default function Table({columns, data}) {
         prepareRow
       } = useTable({columns: React.useMemo(() => columns, []), data})
     return (
-        <table {...getTableProps()}>
+        <table className={styles.table} {...getTableProps()}>
         <thead>
         {headerGroups.map(hGroup => {
             const { key, ...restHeaderGroupProps } = hGroup.getHeaderGroupProps()
@@ -49,3 +50,5 @@ export default function Table({columns, data}) {
       </table>
     )
 }
+
+export default CreateTable
