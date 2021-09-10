@@ -1,20 +1,18 @@
-@mixin form {
+.form {
     h1 {
         @apply font-extrabold text-2xl lg:text-4xl mb-8;
     }
     input, select {
         @apply block w-full;
-        &[type="submit"] {
-            @apply w-1/4 p-4 mt-8;
-        }
     }
     label {
+        @apply block mb-4;
         > span:first-child {
-            @apply block mt-4;
+            @apply block;
         }
     } 
 }
 
-@mixin error {
+.error {
     @apply text-red-700;
 }

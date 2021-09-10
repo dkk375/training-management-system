@@ -16,7 +16,9 @@ model Event {
   type        String
   startDate   DateTime      @default(now())
   endDate     DateTime      @default(now())
+  organizer   String?
   classes     Class[]
+  attendants  Student[]
 }
 
 model Student {
@@ -24,6 +26,9 @@ model Student {
   name        String
   email       String?
   phoneNum    String?
+  campus      String?
+  event       Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId     String
 }
 
 model Class {
@@ -31,6 +36,6 @@ model Class {
   name        String
   classType   String
   schedule    DateTime      @default(now())
-  event       Event         @relation(fields: [eventId], references: [id])
+  event       Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     String
 }

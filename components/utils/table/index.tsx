@@ -2,14 +2,19 @@ import React from 'react'
 import { useTable } from 'react-table'
 import styles from '@styles/modules/table.module.scss'
 
-const CreateTable = ({columns, data}) => {
+const CreateTable = ({columns, data, updateMyData, skipPageReset}) => {
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         rows,
         prepareRow
-      } = useTable({columns: React.useMemo(() => columns, []), data})
+    } = useTable({
+        columns: React.useMemo(() => columns, []),
+        data,
+        updateMyData,
+        autoResetPage: !skipPageReset
+    })
     return (
         <table className={styles.table} {...getTableProps()}>
         <thead>

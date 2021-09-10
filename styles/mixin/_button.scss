@@ -1,0 +1,14 @@
+.btn_container {
+    @apply flex flex-row-reverse gap-4 my-4;
+}
+
+.btn {
+    @apply w-max #{!important};
+    @apply bg-white border border-gray-400 py-2 px-8 text-center rounded-lg shadow-lg;
+    cursor: pointer;
+}
+
+.btn_danger {
+    @extend .btn;
+    @apply text-white bg-red-600;
+}

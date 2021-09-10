@@ -1,0 +1,26 @@
+@use '../mixin/button';
+
+.title {
+    @apply text-4xl font-extrabold mr-auto;
+}
+
+.header {
+    @apply flex flex-row items-center mb-8;
+}
+
+.info {
+    @apply mb-12;
+    h2 {
+        @apply text-2xl;
+    }
+}
+
+.attendants {
+    h2 {
+        @apply text-2xl font-bold mr-auto;
+    }
+}
+
+.table_title {
+    @apply flex flex-row items-center;
+}

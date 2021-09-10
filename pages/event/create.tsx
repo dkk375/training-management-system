@@ -2,6 +2,7 @@ import MainLayout from '@layouts/main'
 import type { NextPage } from 'next'
 import { useForm } from 'react-hook-form'
 import Router from 'next/router'
+import Link from 'next/link'
 import Random from '@lib/random'
 import styles from '@styles/modules/create.module.scss'
 
@@ -42,15 +43,24 @@ const CreateEvent: NextPage = () => {
                     </select>
                 </label>
                 <label>
+                    <span>Organizer</span>
+                    <input type="text" {...register('organizer', {required: false})} />
+                </label>
+                <label>
                     <span>Tanggal Mulai</span>
                     <input type="date" {...register('startDate', {required: true})} />
+                    {errors['name']?.type === 'required' && <span className={styles.error}>Kolom ini wajib diisi.</span>}
                 </label>
                 <label>
                     <span>Tanggal Selesai</span>
                     <input type="date" {...register('endDate', {required: true})} />
+                    {errors['name']?.type === 'required' && <span className={styles.error}>Kolom ini wajib diisi.</span>}
                 </label>
                 <input type="hidden" value={`e_${Random()}`} {...register('id')} />
-                <input type="submit" />
+                <div className={styles.btn_container}>
+                    <input className={styles.btn} type="submit" />
+                    <Link href="/"><a className={styles.btn}>Kembali</a></Link>
+                </div>
             </form>
         </MainLayout>
     )

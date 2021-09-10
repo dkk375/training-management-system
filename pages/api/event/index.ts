@@ -7,6 +7,7 @@ export default async function handle(req, res) {
             id: data.id,
             name: data.name,
             type: data.type,
+            organizer: data.organizer,
             startDate: new Date(data.startDate),
             endDate: new Date(data.endDate)
         }
