@@ -20,21 +20,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             id: String(params?.id)
         },
         include: {
-            attendants: {
-                select: {
-                    id: true, 
-                    name: true, 
-                    campus: true,
-                    phoneNum: true,
-                    email: true,
-                    eventId: true
-                }
-            }
+            attendants: true
         }
     })
+    
     if (!data) {
         return { notFound: true }
     }
+
     return { props: {
         id: data.id,
         name: data.name,

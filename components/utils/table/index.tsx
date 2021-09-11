@@ -10,8 +10,8 @@ const CreateTable = ({columns, data, updateMyData, skipPageReset}) => {
         rows,
         prepareRow
     } = useTable({
-        columns: React.useMemo(() => columns, []),
-        data,
+        columns: React.useMemo(() => columns, [columns]),
+        data: React.useMemo(() => data, [data]),
         updateMyData,
         autoResetPage: !skipPageReset
     })

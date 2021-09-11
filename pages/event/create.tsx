@@ -56,7 +56,7 @@ const CreateEvent: NextPage = () => {
                     <input type="date" {...register('endDate', {required: true})} />
                     {errors['name']?.type === 'required' && <span className={styles.error}>Kolom ini wajib diisi.</span>}
                 </label>
-                <input type="hidden" value={`e_${Random()}`} {...register('id')} />
+                <input type="hidden" value={`e:${Random(7)}`} {...register('id')} />
                 <div className={styles.btn_container}>
                     <input className={styles.btn} type="submit" />
                     <Link href="/"><a className={styles.btn}>Kembali</a></Link>

@@ -17,7 +17,7 @@ const Attendants = ({initialData, eventId}) => {
     const onAddRowClick = () => {
         setRowData(
             rowData.concat({
-                id: `at_${Random(5)}`, 
+                id: `at:${Random(5)}`, 
                 name:'', 
                 campus: '', 
                 email: '', 
@@ -29,15 +29,17 @@ const Attendants = ({initialData, eventId}) => {
 
     const onSaveData = async () => {
         rowData.map( async (data) => {
-            if(originalData.filter(d => d.id ===data.id).length === 0 ) {
-                try {
-                    await fetch('/api/student', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    })
-                } catch (error) {
-                    console.error(error)
+            if(originalData.filter(d => d.id === data.id).length === 0 ) {
+                if(originalData.indexOf(data) === -1) {
+                    try {
+                        await fetch('/api/student', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        })
+                    } catch (error) {
+                        console.error(error)
+                    }
                 }
             } else {
                 try {
@@ -51,8 +53,17 @@ const Attendants = ({initialData, eventId}) => {
                 }
             }
 
-            Router.push(`/event/${data.eventId}`)
+            Router.push(`/event/${eventId}`)
         })
+    }
+
+    const onDelete = async (id) => {
+        const updatedData = rowData.filter(row => row.id !== id)
+        setRowData(updatedData)
+        await fetch(`/api/student/${id}`, {
+            method: 'DELETE'
+        })
+        Router.push(`/event/${eventId}`)
     }
 
     const updateMyData = (rowIndex, columnId, value) => {
@@ -88,6 +99,10 @@ const Attendants = ({initialData, eventId}) => {
             Header: 'Nomor Telepon',
             accessor: 'phoneNum',
             Cell: EditableCell
+        },
+        {
+            Header: 'Aksi',
+            Cell: ({ row }) => <span className="text-red-600 hover:underline cursor-pointer" onClick={() => onDelete(row.original.id)}>Hapus</span>
         }
     ]
 
@@ -101,8 +116,6 @@ const Attendants = ({initialData, eventId}) => {
             </div>
         </div>
         <Table columns={columns} data={rowData} updateMyData={updateMyData} skipPageReset={skipPageReset}/>
-        <p className="text-red-600">{JSON.stringify(rowData)/* for debugging reason */}</p>
-        <p className="text-green-600">{JSON.stringify(originalData)/* for debugging reason */}</p>
         </>
     )
 }

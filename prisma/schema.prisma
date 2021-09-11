@@ -27,6 +27,7 @@ model Student {
   email       String?
   phoneNum    String?
   campus      String?
+  regDate     DateTime      @default(now())        
   event       Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     String
 }
