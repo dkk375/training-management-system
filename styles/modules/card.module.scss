@@ -1,17 +1,5 @@
+@use '../mixin/card';
+
 .card {
-    @apply aspect-w-4 aspect-h-3;
-    div {
-        @apply border border-green-400 rounded-xl p-4;
-        @apply flex flex-col;
-        @apply shadow hover:shadow-lg transition-all;
-        h1 {
-            @apply text-2xl lg:text-4xl font-extrabold;
-        }
-        h2 {
-            @apply text-xl lg:text-2xl mt-2;
-        }
-        p {
-            @apply mt-auto;
-        }
-    }
+    @include card.card;
 }

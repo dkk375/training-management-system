@@ -1,15 +1,21 @@
 @use '../mixin/button';
+@use '../mixin/card';
+
+@mixin gap {
+    @apply mb-12;
+}
 
 .title {
     @apply text-4xl font-extrabold mr-auto;
 }
 
 .header {
-    @apply flex flex-row items-center mb-8;
+    @apply flex flex-row items-center;
+    @include gap;
 }
 
 .info {
-    @apply mb-12;
+    @include gap;
     h2 {
         @apply text-2xl;
     }
@@ -19,4 +25,9 @@
     h2 {
         @apply text-2xl font-bold mr-auto;
     }
+}
+
+.card_container {
+    @include card.card_container;
+    @include gap;
 }

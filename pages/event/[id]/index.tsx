@@ -1,8 +1,10 @@
 import MainLayout from '@layouts/main'
 import Attendants from '@components/sub/attendance'
+import Card from '@components/home/card'
 import type { GetServerSideProps, NextPage } from 'next'
 import prisma from '@lib/prisma'
 import { ConvertToLocalDate } from '@lib/date'
+import Link from 'next/link'
 import Router from 'next/router'
 import styles from '@styles/modules/eventPage.module.scss'
 
@@ -20,7 +22,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             id: String(params?.id)
         },
         include: {
-            attendants: true
+            attendants: true,
+            classes: true
         }
     })
     
@@ -29,12 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
 
     return { props: {
-        id: data.id,
-        name: data.name,
-        organizer: data.organizer,
-        startDate: ConvertToLocalDate(data.startDate),
-        endDate: ConvertToLocalDate(data.endDate),
-        attendants: data.attendants
+        ...JSON.parse(JSON.stringify(data))
     }}
 }
 
@@ -46,11 +44,18 @@ const EventPage: NextPage = (props) => {
                 <h1 className={styles.title}>{props['name']}</h1>
                 <div className={styles.btn_container}>
                     <button className={styles.btn_danger} onClick={() => deleteEvent(props['id'])}><span>Hapus</span></button>
+                    <Link href="/"><a className={styles.btn}>Kembali</a></Link>
                 </div>
             </section>
             <section className={styles.info}>
                 <h2>Diselenggarakan Oleh <strong>{props['organizer']}</strong></h2>
-                <h2>{props['startDate']} - {props['endDate']}</h2>
+                <h2>{ConvertToLocalDate(props['startDate'])} - {ConvertToLocalDate(props['endDate'])}</h2>
+            </section>
+            <section className={styles.card_container}>
+                {props['classes'].map(data => (
+                    <Card title={data.name} dateStart={ConvertToLocalDate(data.schedule)} url={`#`} key={data.id} />
+                ))}
+                <Card title={'Tambah Materi'} url={'#'} />
             </section>
             <section className={styles.attendants}>
                 <Attendants initialData={props['attendants']} eventId={props['id']}/>

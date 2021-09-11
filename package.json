@@ -9,7 +9,9 @@
     "lint": "next lint",
     "prisma:migrate": "yarn prisma migrate deploy",
     "prisma:generate": "yarn prisma generate",
-    "prebuild": "run-s prisma:**"
+    "prebuild": "run-s prisma:**",
+    "clean": "yarn trash \".next\" \"out\" \".netlify/*\" \"!.netlify/state.json\"",
+    "predev": "run-s clean"
   },
   "dependencies": {
     "@prisma/client": "3.0.1",
@@ -35,6 +37,7 @@
     "postcss": "^8.3.6",
     "prisma": "3.0.1",
     "tailwindcss": "^2.2.11",
+    "trash-cli": "^4.0.0",
     "typescript": "4.4.2"
   }
 }

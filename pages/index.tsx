@@ -9,15 +9,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const data = await prisma.event.findMany()
     return {
         props: { 
-        data: data.map(item => {
-            return {
-            id: item.id,
-            name: item.name,
-            eventType: item.type,
-            startDate: ConvertToLocalDate(item.startDate),
-            endDate: ConvertToLocalDate(item.endDate)
-            }
-        })
+            data: Object.values(JSON.parse(JSON.stringify(data)))
         }
     }
 }
@@ -27,7 +19,7 @@ const Home: NextPage = (props) => {
         <MainLayout>
         <section className={styles.card_container}>
             {props['data'].map(data => (
-                <Card title={data.name} subtitle={data.eventType} dateStart={data.startDate} url={`/event/${data.id}`} key={data.id} />
+                <Card title={data.name} subtitle={data.type.toUpperCase()} dateStart={ConvertToLocalDate(data.startDate)} url={`/event/${data.id}`} key={data.id} />
             ))}
             <Card title={'Tambah Dauroh'} url={'/event/create'} />
         </section>
