@@ -102,7 +102,7 @@ const Attendants = ({initialData, eventId}) => {
         },
         {
             Header: 'Aksi',
-            Cell: ({ row }) => <span className="text-red-600 hover:underline cursor-pointer" onClick={() => onDelete(row.original.id)}>Hapus</span>
+            Cell: function DeleteAttendantsButton({ row }) { return <span className="text-red-600 hover:underline cursor-pointer" onClick={() => onDelete(row.original.id)}>Hapus</span>}
         }
     ]
 
