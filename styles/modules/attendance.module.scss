@@ -1,0 +1,5 @@
+@use '../mixin/button';
+
+.table_title {
+    @apply flex flex-row items-center;
+}
