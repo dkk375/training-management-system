@@ -6,17 +6,36 @@ import Link from 'next/link'
 import Random from '@lib/random'
 import styles from '@styles/modules/create.module.scss'
 
+import { defaultClassDM1 } from '@lib/defaultClasses'
 
 const CreateEvent: NextPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = async (data, event) => {
         event.preventDefault()
+
+        let classData
+        if(data.type === 'dm1') {
+            classData = defaultClassDM1
+            classData.map(d => {
+                d.id = `c:${Random(5)}`
+                d.eventId = data.id
+                d.schedule = new Date(data.startDate)
+            })
+        }
+
         try {
             await fetch('/api/event', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
+            if(classData) {
+                await fetch('/api/class/createall', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(classData)
+                })
+            }
             await Router.push('/')
         } catch (error) {
             console.error(error)

@@ -38,6 +38,7 @@ model Class {
   id          String        @id
   name        String
   classType   String
+  teacher     String?
   schedule    DateTime      @default(now())
   event       Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     String
