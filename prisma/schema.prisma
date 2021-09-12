@@ -4,12 +4,10 @@
 datasource db {
   provider = "postgres"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl= env("DATABASE_SHADOW_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 model Event {
