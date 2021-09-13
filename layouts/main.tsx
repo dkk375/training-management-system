@@ -1,4 +1,5 @@
 import BaseLayout from './base'
+import { Toaster } from 'react-hot-toast'
 import styles from '@styles/modules/main.module.scss'
 
 const MainLayout = ({children}) => (
@@ -8,6 +9,7 @@ const MainLayout = ({children}) => (
             <section className={styles.content}>
                 {children}
             </section>
+            <Toaster position="bottom-right" />
         </main>
         <footer></footer>
     </BaseLayout>

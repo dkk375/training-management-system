@@ -7,6 +7,7 @@ import Random from '@lib/random'
 import styles from '@styles/modules/create.module.scss'
 
 import { defaultClassDM1 } from '@lib/defaultClasses'
+import toast from 'react-hot-toast'
 
 const CreateEvent: NextPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()

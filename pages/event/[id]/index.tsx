@@ -7,10 +7,12 @@ import { ConvertToLocalDate } from '@lib/date'
 import Link from 'next/link'
 import Router from 'next/router'
 import styles from '@styles/modules/eventPage.module.scss'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 
 async function deleteEvent(id:string):Promise<void> {
-    await fetch(`/api/event/${id}`, {
+    await axios(`/api/event/${id}`, {
         method: 'DELETE'
     })
     Router.push('/')
@@ -36,6 +38,18 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }}
 }
 
+const DeleteConfirmation = ({props}) => (
+    <div className="flex flex-col gap-8">
+        <p className="text-lg font-bold">Anda yakin akan menghapus event ini?</p>
+        <div className="flex flex-row gap-4 justify-end">
+            <span className={styles.btn_danger} onClick={() => {
+                deleteEvent(props['id'])
+                toast.dismiss('delete')
+            }}>Ya, hapus</span>
+            <span className={styles.btn} onClick={() => toast.dismiss('delete')}>Tidak usah</span>
+        </div>
+    </div>
+)
 
 const EventPage: NextPage = (props) => {
     return (
@@ -43,7 +57,7 @@ const EventPage: NextPage = (props) => {
             <section className={styles.header}>
                 <h1 className={styles.title}>{props['name']}</h1>
                 <div className={styles.btn_container}>
-                    <button className={styles.btn_danger} onClick={() => deleteEvent(props['id'])}><span>Hapus</span></button>
+                    <button className={styles.btn_danger} onClick={() => toast(<DeleteConfirmation props={props}/>, {id: 'delete',duration: Infinity})}><span>Hapus</span></button>
                     <Link href="/"><a className={styles.btn}>Kembali</a></Link>
                 </div>
             </section>

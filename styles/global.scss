@@ -1,6 +1,12 @@
+@use './mixin/fonts';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    @include fonts.default;
+}
 
 body {
     @apply h-screen;

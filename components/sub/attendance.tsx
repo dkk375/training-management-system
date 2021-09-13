@@ -3,6 +3,8 @@ import Router from 'next/router'
 import Table from '@components/utils/table'
 import EditableCell from '@components/utils/table/editable'
 import Random from '@lib/random'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import styles from '@styles/modules/attendance.module.scss'
 
 const Attendants = ({initialData, eventId}) => {
@@ -27,43 +29,44 @@ const Attendants = ({initialData, eventId}) => {
         )
     }
 
-    const onSaveData = async () => {
-        rowData.map( async (data) => {
-            if(originalData.filter(d => d.id === data.id).length === 0 ) {
-                if(originalData.indexOf(data) === -1) {
-                    try {
-                        await fetch('/api/student', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        })
-                    } catch (error) {
-                        console.error(error)
+    const onSaveData = async () => { 
+        let promises:Promise<void>[] = []
+        rowData.forEach((data) => {
+            promises.push(new Promise((res, rej) => {
+                if(originalData.filter(d => d.id === data.id).length === 0 ) {
+                    if(originalData.indexOf(data) === -1) {
+                        axios({
+                            'url': '/api/student/',
+                            'method': 'POST',
+                            'headers': { 'Content-Type': 'application/json' },
+                            'data': JSON.stringify(data)
+                        }).then(() => res()).catch(rej)
                     }
+                } else {
+                    axios({
+                        'url': `/api/student/${data.id}`,
+                        'method': 'PUT',
+                        'headers': { 'Content-Type': 'application/json' },
+                        'data': JSON.stringify(data)
+                    }).then(() => res()).catch(rej)
                 }
-            } else {
-                try {
-                    await fetch(`/api/student/${data.id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    })
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-
-            Router.push(`/event/${eventId}`)
+            }))
+        })
+        Promise.all(promises)
+        .then(() => toast.success('Data telah disimpan.'))
+        .catch((e) => {
+            console.error(e)
+            toast.error('Terjadi kesalahan: (' + e + ')')
         })
     }
 
     const onDelete = async (id) => {
         const updatedData = rowData.filter(row => row.id !== id)
         setRowData(updatedData)
-        await fetch(`/api/student/${id}`, {
+        await axios(`/api/student/${id}`, {
             method: 'DELETE'
-        })
-        Router.push(`/event/${eventId}`)
+        }).then(() => toast.success('Data peserta berhasil dihapus'))
+        .catch((e) => toast.error('Terjadi kesalahan: (' + e + ')'))
     }
 
     const updateMyData = (rowIndex, columnId, value) => {
@@ -102,9 +105,11 @@ const Attendants = ({initialData, eventId}) => {
         },
         {
             Header: 'Aksi',
-            Cell: function DeleteAttendantsButton({ row }) { return <span className="text-red-600 hover:underline cursor-pointer" onClick={() => onDelete(row.original.id)}>Hapus</span>}
+            Cell: function DeleteAttendantsButton({ row }) {
+                 return <span className="text-red-600 hover:underline cursor-pointer text-center block" onClick={() => onDelete(row.original.id)}>Hapus</span>}
         }
     ]
+
 
     return (
         <>
